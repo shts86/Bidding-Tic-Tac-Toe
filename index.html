@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html  ng-app="tictactoeApp">
+    <head>
+        <title>TIC TAC TOE</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="css/style.css" rel="stylesheet">
+        <script src="lib/angular.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/game.js"></script>
+    </head>
+    <body>  
+        <h1>
+            <span class="red-win">T</span><span class="yellow-span">i</span><span class="red-win">c</span>&nbsp;<span class="yellow-span">T</span><span class="red-win">a</span><span class="yellow-span">c</span>&nbsp;<span class="red-win">T</span><span class="yellow-span">o</span><span class="red-win">e</span></h1>
+        <div ng-controller="GameCtrl">
+            <div class="game-app-container">
+                
+            <div>
+                <button class="newGameBtn" ng-click="newGame()">New Game</button>
+            </div>
+            <div class="free-text">
+                It is {{theGame.colorTurn}} turn now!
+            </div>
+            <div class="bet-container">
+                <div class="bet-cell x-side">
+                    <div class="free-text">
+                        <div>
+                           <span class="team-title">X</span>
+                        </div>
+                        {{theGame.playerXBalance}} 
+                    </div>
+                    <div ng-show="showX">
+                        <input id="inputBidX" ng-init="focusX()" class="bet-input" type="number"  min="0" max="{{theGame.playerXBalance}}" ng-model="theGame.xBid" select-on-click>
+                        <div>
+                            <button class="newGameBtn bet-button" ng-click="placeXBid()">Bet</button>
+                        </div>
+                    </div>
+                    <img ng-show="!showX" class="v-img" src="images/V5.png" alt="bid accept">
+                    <label class="bid-final" ng-show="!showO && !showX">{{theGame.xBid}}</label>
+                </div>
+                <div class="bet-cell o-side">
+                    <div class="free-text">
+                        <div>
+                           <span class="team-title">O</span>
+                        </div>
+                        {{theGame.playerOBalance}}
+                    </div>
+                    <div ng-show="showO">
+                        <input id="inputBidO" class="bet-input" type="number" min="0" max="{{theGame.playerOBalance}}" ng-model="theGame.oBid" select-on-click>
+                        <div>
+                            <button class="newGameBtn bet-button" ng-click="placeOBid()">Bet</button>
+                        </div>
+                    </div>
+                    <img ng-show="!showO" class="v-img" src="images/V5.png" alt="bid accept">
+                    <label class="bid-final" ng-show="!showO && !showX">{{theGame.oBid}}</label>
+                </div>
+            </div>
+            <div class="game-container">
+                <div class="table-container">
+                <table class="table-game">
+                    <tr ng-repeat="row in table" >
+                        <td ng-repeat="cell in row" ng-click="drawSign(cell)"><div class="hole {{cell.status}}"></div></td>
+                    </tr>
+                </table>
+                </div>
+            <div class="win-lable shadow-win" ng-show="theGame.gameFinish" ng-class="{'red-win': !theGame.turn, 'yellow-win': theGame.turn }">
+                    {{winnerText}}
+            </div>
+            </div>
+            </div>
+        </div>
+    </body>
+</html>
